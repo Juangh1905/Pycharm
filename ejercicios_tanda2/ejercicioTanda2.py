@@ -130,8 +130,6 @@ for i in range(ano_nacimiento ,ano+1):
 
 
 
-
-
 #Ejercicio 10
 num = int(input("Introduce un número entero: "))
 
