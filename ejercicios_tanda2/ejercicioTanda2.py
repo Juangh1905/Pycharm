@@ -18,7 +18,7 @@ if palabra.__contains__(letra):
 else:
     print("La letra no esta dentro de la palabra")
 
-"""
+
 #Ejercicio 3
 presupuesto = 200
 total = 0
@@ -36,7 +36,6 @@ print("Total de tus compras:", total, "€")
 
 
 
-""" 
 #Ejercicio 4
 num = 1
 while num != 0:
@@ -50,7 +49,6 @@ while num != 0:
 #Ejercicio 5
 suma = 0
 contador = 0
-
 
 while True:
     numero = int(input("Introduce un número (0 para terminar): "))
@@ -96,11 +94,9 @@ print("La suma de los múltiplos de 3 es:", suma)
 inicio = int(input("Introduce el extremo izquierdo: "))
 fin = int(input("Introduce el extremo derecho: "))
 
-# Inicializamos variables
 num = inicio
 suma = 0
 
-# Bucle while para sumar los múltiplos de 3
 while num <= fin:
     if num % 3 == 0:
         suma += num
