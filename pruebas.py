@@ -146,7 +146,7 @@ x = [
 
 print(resumir(x))  # Imprime: [6, 15, 6]
 
-"""
+
 
 #Multiplicación de matrices
 # Definimos las matrices
@@ -184,6 +184,10 @@ for i in range(len(A)):
 # Mostramos el resultado
 for fila in C:
     print(fila)
+
+"""
+
+
 
 
 
