@@ -1,6 +1,11 @@
+"""
 #Ejercicio 1
-num = int(input("Ingresa un numero: "))
-for i in range(1, num+1):
+num = int(input("Ingresa un número: "))
+diccionario = {}
+
+for i in range(1, num + 1):
+    diccionario[i] = i**3  #
+
 print(diccionario)
 
 
@@ -45,6 +50,49 @@ while True:
         numeros["negativos"] += 1
 
 print(numeros)
+
+
+# Ejercicio 5
+clase = {}
+
+while True:
+    alumno = input("Ingresa el nombre del alumno: ")
+    if alumno == "":
+        break
+
+    notas = []
+    while True:
+        nota = int(input(f"Introduce una nota para {alumno} (1-10, 0 para terminar): "))
+        if nota == 0:
+            break
+        elif 1 <= nota <= 10:
+            notas.append(nota)
+        else:
+            print("️La nota debe estar entre 1 y 10.")
+
+    clase[alumno] = notas
+
+for alumno, notas in clase.items():
+    if notas:
+        media = sum(notas) / len(notas)
+        print(f"{alumno}: notas = {notas}, media = {media:.2f}")
+    else:
+        print(f"{alumno}: sin notas registradas")
+
+
+#Ejercicio 6
+num = int(input("Ingresa un número: "))
+diccionario = {}
+
+for i in range(1, num + 1):
+    diccionario[i] =   "*"*i
+
+for clave, valor in diccionario.items():
+    print(f"{clave}: {valor}")
+
+
+"""
+
 
 
 
