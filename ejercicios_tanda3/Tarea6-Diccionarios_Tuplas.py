@@ -1,12 +1,7 @@
-"""
 #Ejercicio 1
 num = int(input("Ingresa un numero: "))
-diccionario = {}
 for i in range(1, num+1):
-    diccionario[i] = i**3
 print(diccionario)
-
-
 
 
 #Ejercicio 2
@@ -52,5 +47,4 @@ while True:
 print(numeros)
 
 """
-
 
