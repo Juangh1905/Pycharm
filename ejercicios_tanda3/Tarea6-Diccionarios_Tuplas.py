@@ -1,3 +1,4 @@
+"""
 #Ejercicio 1
 num = int(input("Ingresa un numero: "))
 for i in range(1, num+1):
@@ -45,6 +46,8 @@ while True:
         numeros["negativos"] += 1
 
 print(numeros)
+
+"""
 
 
 
