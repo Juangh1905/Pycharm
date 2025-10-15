@@ -51,8 +51,6 @@ while True:
 
 print(numeros)
 
-"""
-
 
 # Ejercicio 5
 clase = {}
