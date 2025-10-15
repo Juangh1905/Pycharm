@@ -1,22 +1,32 @@
-array = [[1,2,3],
-         [4,5,6],
-         [7,8,9]]
+
+# quicksort_juan.py
 
 def quicksort(a):
-    menores= []
-    igual= []
+    menores = []
+    igual = []
     mayores = []
 
-    if len(array) > 1:
-        numCentral = array[0]
-        for num in array:
-            if num < numCentral:
-                menores.append(numCentral)
-            elif num > numCentral:
-                mayores.append(numCentral)
+    if len(a) > 1:
+        pivote = a[0]
+        for num in a:
+            if num < pivote:
+                menores.append(num)
+            elif num > pivote:
+                mayores.append(num)
             else:
-                igual.append(numCentral)
-        return quicksort(menores)+numCentral+quicksort(mayores)
+                igual.append(num)
+        return quicksort(menores) + igual + quicksort(mayores)
     else:
-        raise ValueError("No se puede ordenar")
+        return a
+
+# Prueba 1
+lista1 = [5, 2, 9, 1, 7]
+print("Lista original 1:", lista1)
+print("Lista ordenada 1:", quicksort(lista1))
+
+# Prueba 2
+lista2 = [10, 3, 8, 4, 6, 2]
+print("\nLista original 2:", lista2)
+print("Lista ordenada 2:", quicksort(lista2))
+
 
