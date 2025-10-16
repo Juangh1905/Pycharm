@@ -14,10 +14,6 @@ def generar_tablero():
 
     return tablero
 
-tablero = generar_tablero()
-
-for fila in tablero:
-    print(fila)
 
 def minas_vecinas(tablero):
     filas = len(tablero)
@@ -38,8 +34,24 @@ def minas_vecinas(tablero):
                     if 0 <= nx < filas and 0 <= ny < columnas:
                         if tablero[nx][ny] == -1:
                             contador += 1
-
             tablero[x][y] = contador
+
+def descubre(tablero):
+    fila = len(tablero)
+    columna = len(tablero[0])
+    for x in range(fila):
+        for y in range(columna):
+            if tablero[x][y] > 0:
+                tablero[x][y] = -2
+            if tablero[x][y] == 0:
+                 descubre(tablero)
+    return tablero
+
+for filas in generar_tablero():
+    print(filas)
+
+
+
 
 
 

@@ -91,7 +91,53 @@ for clave, valor in diccionario.items():
     print(f"{clave}: {valor}")
 
 
+#Ejercicio 9
+frase = input("Introduce una frase: ")
+
+palabras = frase.split()
+
+# lista de tuplas
+resultado = []
+
+for posicion, palabra in enumerate(palabras):
+    tupla = (palabra, len(palabra), palabra[0], posicion)
+    resultado.append(tupla)
+
+# Mostramos el resultado
+for item in resultado:
+    print(item)
+
+
+
+#Ejercicio 10
+lista1 =[]
+while True:
+    palabra = input("Ingresa una palabra: ")
+    if len(palabra) > 0:
+        lista1.append(palabra)
+    else:
+        break
+tupla = tuple(lista1)
+palabra1, *_, ultimaPalabra = lista1
+print(palabra1, ultimaPalabra)
+
+
+
+#Ejercicio 11
+lista_palabras = ["hola", "adios", "buenas", "hello"]
+lista_longitud = []
+for palabra in lista_palabras:
+    longitud = len(palabra)
+    lista_longitud.append(longitud)
+
+for palabra, longitud in zip(lista_palabras, lista_longitud):
+    print(palabra, 'su longitud es:', longitud)
+
 """
+
+#Ejercicio 12
+
+
 
 
 
