@@ -1,19 +1,18 @@
 # binaria_juan.py
-def busqueda_binaria(lista, num, desplazamiento=0):
+def busqueda_binaria(lista, objetivo):
     if not lista:
         return -1
 
-    mitad = int(len(lista) // 2)
+    mitad = len(lista) // 2
     numCentral = lista[mitad]
-    posicion_real = desplazamiento + mitad
 
-    if num < numCentral:
-        return busqueda_binaria(lista[:mitad], num, desplazamiento)
-    elif num > numCentral:
-        return busqueda_binaria(lista[mitad+1:], num, posicion_real + 1)
+    if numCentral == objetivo:
+        return mitad
+    elif numCentral > objetivo:
+        return busqueda_binaria(lista[:mitad], objetivo)
     else:
-        return f"Encontrado el {num} en la posición {posicion_real}"
-
+        resultado = busqueda_binaria(lista[mitad+1:], objetivo)
+        return -1 if resultado == -1 else mitad + 1 + resultado
 
 
 
@@ -23,7 +22,7 @@ print(busqueda_binaria(lista1, 13))
 
 
 # Prueba 2
-lista2 = [20, 35, 42, 1, 3, 5, 7, 9, 11, 13, 15]
-print(busqueda_binaria(lista2, 15))
+lista2 = [7, 9, 13, 15, 20, 35,]
+print(busqueda_binaria(lista2, 7))
 
 

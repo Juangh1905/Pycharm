@@ -1,6 +1,4 @@
-
 # quicksort_juan.py
-
 def quicksort(a):
     menores = []
     igual = []
