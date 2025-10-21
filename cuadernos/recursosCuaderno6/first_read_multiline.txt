@@ -1,0 +1,6 @@
+"¡Qué ilusión! Vamos a cargar por primera vez un archivo txt con Python"
+Vamos a cargar por primera vez un archivo txt con Python
+¡Y encima contiene múltiples líneas! =D"
+esto es otra línea
+y esto otra
+así hasta el final
