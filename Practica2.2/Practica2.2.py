@@ -155,16 +155,21 @@ def consultar_saldo():
 
 #6
 def aplicar_interes():
-    nombre = input("Nombre del titular de la cuenta: ")
-    interes = input("Ingrese la cantidad de interes: ")
     for cuenta in clientes:
-        if cuenta.titular == nombre and cuenta.tipo == "ahorro":
+        if isinstance(cuenta, CuentaAhorro):
             cuenta.aplicar_interes()
-        else:
-            print("Tipo de cuenta no valido.")
+            print(f"Interés aplicado a la cuenta de {cuenta.titular}.")
+
 
 #7
+def permitir_descubierto():
+    for cuenta in clientes:
+        if isinstance(cuenta, CuentaCorriente):
+            cuenta.permitir_descubierto()
 
+#8
+def obtener_resumen_del_dia():
+    obtener_resumen_del_dia()
 
 
 
