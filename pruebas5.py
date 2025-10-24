@@ -14,8 +14,8 @@ plt.show()
 
 
 """
-import matplotlib.pyplot as plt
-import numpy as np
+#import matplotlib.pyplot as plt
+#import numpy as np
 
 x = np.arange(-100, 100, 10)           # 20 valores
 y = x**2

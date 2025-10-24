@@ -3,68 +3,70 @@ class Cuenta:
         self.titular = titular
         self.saldo = saldo
 
-
     def depositar(self, cantidad):
         if cantidad > 0:
             self.saldo += cantidad
-        else:
-            print("El saldo no puede ser negativo.")
 
     def extraer(self, cantidad):
-        if self.saldo > cantidad:
+        if self.saldo >= cantidad:
             self.saldo -= cantidad
-        else:
-            print("No hay suficiente saldo")
 
     def obtener_saldo(self):
-        return f"Saldo actual: ${self.saldo}"
+        return f"Saldo actual: ${self.saldo:.2f}"
 
     def __add__(self, otra):
-        if self.saldo >= 10:
+        if isinstance(otra, Cuenta) and self.saldo >= 10:
             self.saldo -= 10
             otra.saldo += 10
         return self
 
-    def __str__(self, otra):
-        if self.saldo >= 10:
-            self.saldo -= 10
-            otra.saldo += 10
+    def __sub__(self, otra):
+        if isinstance(otra, Cuenta) and otra.saldo >= 5:
+            otra.saldo -= 5
+            self.saldo += 5
         return self
 
 
 class CuentaAhorro(Cuenta):
-    def __init__(self, tasa_interes: float):
+    def __init__(self, titular: str, saldo: float, tasa_interes: float):
+        super().__init__(titular, saldo)
         self.tasa_interes = tasa_interes
 
     def aplicar_interes(self):
         interes = self.saldo * self.tasa_interes
         self.saldo += interes
 
-class CuentaCorriente(Cuenta):
-    def __init__(self, limite_descubierto: float):
-        self.limite_descubierto = limite_descubierto
 
+class CuentaCorriente(Cuenta):
+    def __init__(self, titular: str, saldo: float, limite_descubierto: float):
+        super().__init__(titular, saldo)
+        self.limite_descubierto = limite_descubierto
 
     def permitir_descubierto(self):
         if self.saldo < 0 and abs(self.saldo) <= self.limite_descubierto:
             print("Descubierto permitido.")
         elif self.saldo < 0:
-            print(f" {self.titular} excede el límite de descubierto")
+            print(f"{self.titular} excede el límite de descubierto")
         else:
             print(f"{self.titular} no está en descubierto")
 
 
 class Banco:
-    def __init__(self, nombre: str, clientes: list, total_depositado: float):
+    def __init__(self, nombre: str):
         self.nombre = nombre
-        self.clientes = clientes
-        self.total_depositado = total_depositado
+        self.clientes = []
+        self.total_depositado = 0
 
     def agregar_cliente(self, cliente):
         self.clientes.append(cliente)
+        print(f"Cliente {cliente.titular} creado.")
 
     def eliminar_cliente(self, cliente):
-        self.clientes.remove(cliente)
+        if cliente in self.clientes:
+            self.clientes.remove(cliente)
+            print(f"Cliente {cliente.titular} eliminado.")
+        else:
+            print("Cliente no encontrado.")
 
     def deposito_total_del_dia(self):
         total = 0
@@ -75,7 +77,9 @@ class Banco:
     def resumen_del_dia(self):
         print(f"Banco: {self.nombre}")
         print(f"Clientes: {len(self.clientes)}")
-        print(f"Total depositado: {self.deposito_total_del_dia():.2f}")
+        print(f"Total depositado: ${self.deposito_total_del_dia():.2f}")
+        for c in self.clientes:
+            print(f"{c.titular}: ${c.saldo:.2f}")
 
 
 def mostrar_menu():
@@ -90,107 +94,109 @@ def mostrar_menu():
     print("8. Resumen del Día")
     print("9. Salir")
 
-#Funciones para el menu
-#1
-clientes = []
+
+banco = Banco("Banco Talavera")
+
 
 def crear_cuenta():
-    tipo = input("¿Qué tipo de cuenta quieres crear? (ahorro/corriente): ").lower()
-    titular = input("Nombre del titular: ")
+    tipo = input("Tipo de cuenta (ahorro/corriente): ").lower()
+    titular = input("Titular: ")
     saldo = float(input("Saldo inicial: "))
-
     if tipo == "ahorro":
-        tasa = float(input("Tasa de interés (ej. 0.05 para 5%): "))
+        tasa = float(input("Tasa de interés: "))
         cuenta = CuentaAhorro(titular, saldo, tasa)
     elif tipo == "corriente":
-        limite = float(input("Límite de descubierto permitido: "))
+        limite = float(input("Límite de descubierto: "))
         cuenta = CuentaCorriente(titular, saldo, limite)
     else:
-        print("Tipo de cuenta no válido.")
+        print("Tipo no válido.")
         return
+    banco.agregar_cliente(cuenta)
+    print("Cuenta creada.")
 
-    clientes.append(cuenta)
-    print(f"Cuenta creada para {titular}.")
 
-#2
 def depositar_dinero():
-    nombre = input("Nombre del titular de la cuenta: ")
-    dinero = float(input("Ingrese la cantidad de dinero que quiere depositar: "))
-    for cuenta in clientes:
-        if cuenta.titular == nombre:
-            cuenta.depositar(dinero)
-            print(f"Se depositaron ${dinero:.2f} en la cuenta de {nombre}.")
+    nombre = input("Titular: ")
+    cantidad = float(input("Cantidad a depositar: "))
+    for c in banco.clientes:
+        if c.titular == nombre:
+            c.depositar(cantidad)
+            print("Depósito realizado.")
             return
+    print("Cuenta no encontrada.")
 
 
-#3
 def retirar_dinero():
-    nombre = input("Nombre del titular de la cuenta: ")
-    dinero = float(input("Ingrese la cantidad de dinero que quiere retirar: "))
-    for cuenta in clientes:
-        if cuenta.titular == nombre:
-            cuenta.retirar(dinero)
-            print(f"Se retiraron ${dinero:.2f} en la cuenta de {nombre}.")
+    nombre = input("Titular: ")
+    cantidad = float(input("Cantidad a retirar: "))
+    for c in banco.clientes:
+        if c.titular == nombre:
+            c.extraer(cantidad)
+            print("Retiro realizado.")
             return
+    print("Cuenta no encontrada.")
 
-#4
+
 def transferir_dinero():
-    cuentaOrigen = input("Nombre del titular de la cuenta: ")
-    cuentaDestino = input("Nombre del titular de la cuenta a tranferir: ")
-    for cuenta in clientes:
-        if cuenta.titular == cuentaOrigen:
-            cuenta.__add__(cuentaDestino)
-        elif cuentaOrigen == cuentaDestino:
-            print("Por favor selecciona cuentas diferentes.")
-            return
+    origen = input("Titular origen: ")
+    destino = input("Titular destino: ")
+    for c1 in banco.clientes:
+        if c1.titular == origen:
+            for c2 in banco.clientes:
+                if c2.titular == destino and origen != destino:
+                    c1 + c2
+                    print("Transferencia realizada.")
+                    return
+    print("Cuentas no válidas.")
 
-#5
+
 def consultar_saldo():
-    nombre = input("Nombre del titular de la cuenta: ")
-    for cuenta in clientes:
-        if cuenta.titular == nombre:
-            cuenta.consultar_saldo()
-        else:
-            print("No se ha encontrado la cuenta")
+    nombre = input("Titular: ")
+    for c in banco.clientes:
+        if c.titular == nombre:
+            print(c.obtener_saldo())
+            return
+    print("Cuenta no encontrada.")
 
-#6
+
 def aplicar_interes():
-    for cuenta in clientes:
-        if isinstance(cuenta, CuentaAhorro):
-            cuenta.aplicar_interes()
-            print(f"Interés aplicado a la cuenta de {cuenta.titular}.")
+    for c in banco.clientes:
+        if isinstance(c, CuentaAhorro):
+            c.aplicar_interes()
+            print(f"Interés aplicado a {c.titular}.")
 
 
-#7
 def permitir_descubierto():
-    for cuenta in clientes:
-        if isinstance(cuenta, CuentaCorriente):
-            cuenta.permitir_descubierto()
+    for c in banco.clientes:
+        if isinstance(c, CuentaCorriente):
+            c.permitir_descubierto()
 
-#8
+
 def obtener_resumen_del_dia():
-    obtener_resumen_del_dia()
+    banco.resumen_del_dia()
 
 
-
-
-
-
-# Bucle principal
 while True:
     mostrar_menu()
-    opcion = input("Selecciona una opción: ")
-
+    opcion = input("Opción: ")
     if opcion == "1":
         crear_cuenta()
     elif opcion == "2":
         depositar_dinero()
     elif opcion == "3":
-        pass
-
-
+        retirar_dinero()
+    elif opcion == "4":
+        transferir_dinero()
+    elif opcion == "5":
+        consultar_saldo()
+    elif opcion == "6":
+        aplicar_interes()
+    elif opcion == "7":
+        permitir_descubierto()
+    elif opcion == "8":
+        obtener_resumen_del_dia()
+    elif opcion == "9":
+        print("Fin del programa.")
+        break
     else:
-        print("Opción no válida. Intenta de nuevo.")
-
-
-
+        print("Opción no válida.")
