@@ -1,3 +1,4 @@
+#buscaminas_juan.py
 import random
 
 # a.
