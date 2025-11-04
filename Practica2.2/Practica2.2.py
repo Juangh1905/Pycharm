@@ -173,9 +173,6 @@ def obtener_resumen_del_dia():
 
 
 
-
-
-
 # Bucle principal
 while True:
     mostrar_menu()
