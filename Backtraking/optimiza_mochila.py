@@ -40,7 +40,7 @@ def copia_mochila(mochila_final, mochila):
     """
     mochila_final.clear()
     mochila_final.extend(mochila)
-"""
+
 # backtracking
 def optimiza_mochila(mochila, mochila_optima, items, peso_max, paso=0):
     for i in range(len(items)):
@@ -81,7 +81,7 @@ def optimiza_mochila(mochila, mochila_optima, items, peso_max, paso=0):
             optimiza_mochila(mochila, mochila_optima, nuevos_items, peso_max, paso + 1)
 
             mochila.pop()
-
+"""
 
 # ejecución principal
 mochila = []  # mochila provisional que vamos generando en cada estado nuevo
