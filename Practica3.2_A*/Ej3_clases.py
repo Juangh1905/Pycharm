@@ -1,5 +1,6 @@
 from graph import Node, Graph
 import matplotlib.pyplot as plt
+from AStar import AStar
 
 
 def crear_grafo():
@@ -78,6 +79,25 @@ print(grafo.number_of_nodes())
 
 #5
 print("Lista de nodos: ", [n.value for n in grafo.nodes])
+
+
+# Ejercicio 4
+def reset_graph(grafo):
+    for nodo in grafo.nodes:
+        nodo.parent = None
+        nodo.heuristic_value = -1
+        nodo.distance_from_start = inf
+
+""" 
+# Ejercicio 5
+def ruta(origen, destino, grafo):
+    camino = AStar(grafo, origen, destino)
+    if camino:
+        nombres = [nodo.value for nodo in camino]
+        print(" → ".join(nombres))
+    else:
+        print("No se encontró ruta entre", origen, "y", destino)
+"""
 
 
 
