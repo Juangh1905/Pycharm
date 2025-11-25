@@ -1,6 +1,7 @@
 from graph import Node, Graph
 import matplotlib.pyplot as plt
-from AStar import AStar
+from a_star import AStar
+from math import inf
 
 
 def crear_grafo():
@@ -56,6 +57,7 @@ def dibujar_grafo_matplotlib(grafo):
 
 grafo = crear_grafo()
 
+""" 
 #Ejercicio3.a
 #dibujar_grafo_matplotlib(grafo)
 
@@ -88,16 +90,47 @@ def reset_graph(grafo):
         nodo.heuristic_value = -1
         nodo.distance_from_start = inf
 
-""" 
+
+
+
 # Ejercicio 5
 def ruta(origen, destino, grafo):
-    camino = AStar(grafo, origen, destino)
-    if camino:
-        nombres = [nodo.value for nodo in camino]
-        print(" → ".join(nombres))
+    algoritmo = AStar(grafo, origen, destino)   # crear objeto
+    resultado = algoritmo.search()              # ejecutar búsqueda
+    if resultado:
+        path, cost = resultado
+        print("Ruta:", " → ".join(path))
+        print("Coste total:", cost)
     else:
         print("No se encontró ruta entre", origen, "y", destino)
-"""
 
+grafo = crear_grafo()
+
+ruta('A', 'G', grafo)
+
+
+
+# Ejercicio 6
+def ejecutar_busquedas(grafo):
+    casos = [
+        ('A', 'B'),
+        ('A', 'G'),
+        ('A', 'H'),
+        ('G', 'C')
+    ]
+
+    for origen, destino in casos:
+        algoritmo = AStar(grafo, origen, destino)
+        resultado = algoritmo.search()
+        if resultado:
+            path, cost = resultado
+            print(f"Camino más corto entre {origen} y {destino}: {' → '.join(path)} (Coste: {cost})")
+        else:
+            print(f"No se encontró ruta entre {origen} y {destino}")
+
+grafo = crear_grafo()
+ejecutar_busquedas(grafo)
+
+"""
 
 
