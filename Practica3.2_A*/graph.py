@@ -87,8 +87,8 @@ class Node:
                 List
         """
         children = []
-        for child in self.neighbors:
-            children.append(child[0])
+        for child in self.neighbors:  # cada vecino es una tupla (Node, peso)
+            children.append(child[0])  # añadimos solo el Node
         return children
 
     def __gt__(self, other):

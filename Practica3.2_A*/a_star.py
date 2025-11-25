@@ -114,8 +114,8 @@ class AStar:
         int
     """
     return self.calculate_distance(parent, child) + self.manhattan_distance(child, target)
-    
-  
+
+
   def insert_to_list(self, list_category, node):
     """
       Insert a node in the proper list (opened or closed) according to list_category
@@ -141,7 +141,7 @@ class AStar:
       -------
         Node
     """
-    self.opened.sort()
+    self.opened.sort(key=lambda n: n.heuristic_value)
     node = self.opened.pop(0)
     self.closed.append(node)
     return node
@@ -223,48 +223,49 @@ class AStar:
           total_cost += neighbor[1]
 
     return total_cost
-      
 
   def search(self):
-    """
-      Is the main algorithm. Search for a solution in the solution space of the problem
-      Stops if the opened list is empty, so no solution found or if it find a solution. 
-      ...
-      Return
-      ------
-        list
-    """
-    # Calculate the heuristic value of the starting node
-    # The distance from the starting node is 0 so only manhattan_distance is calculated
-    self.start.distance_from_start = 0
-    self.start.heuristic_value = self.manhattan_distance(self.start, self.target)
-    # Add the starting point to opened list
-    self.opened.append(self.start)
+      # Inicialización
+      self.start.distance_from_start = 0
+      self.start.heuristic_value = self.manhattan_distance(self.start, self.target)
+      self.opened.append(self.start)
 
-    while True:
-      self.number_of_steps += 1
+      while True:
+          self.number_of_steps += 1
 
-      if self.opened_is_empty():
-        print(f"No Solution Found after {self.number_of_steps} steps!!!")
-        break
-        
-      selected_node = self.remove_from_opened()
+          if self.opened_is_empty():
+              print(f"No Solution Found after {self.number_of_steps} steps!!!")
+              return None
 
-      # check if the selected_node is the solution
-      if selected_node == self.target:
-        path = self.calculate_path(selected_node)
-        total_cost = self.calculate_cost(path)
-        path.reverse()
-        return path, total_cost
+          # Mostrar listas abiertas y cerradas
+          print(f"\n--- Iteración {self.number_of_steps} ---")
+          print("Abiertos:", [n.value for n in self.opened])
+          print("Cerrados:", [n.value for n in self.closed])
 
-      # extend the node
-      new_nodes = selected_node.extend_node()
+          # Seleccionar nodo
+          selected_node = self.remove_from_opened()
+          print("Nodo seleccionado:", selected_node.value)
 
-      # add the extended nodes in the list opened
-      if len(new_nodes) > 0:
-        for new_node in new_nodes:
-          new_node.heuristic_value = self.calculate_heuristic_value(selected_node, new_node, self.target)
-          if new_node not in self.closed and new_node not in self.opened:
-            new_node.parent = selected_node
-            self.insert_to_list("open", new_node)
+          # Comprobar si es solución
+          if selected_node == self.target:
+              path = self.calculate_path(selected_node)
+              total_cost = self.calculate_cost(path)
+              path.reverse()
+              print("¡Solución encontrada!")
+              return path, total_cost
+
+          # Extender nodo
+          new_nodes = selected_node.extend_node()
+          print("Hijos del nodo seleccionado:", [n.value for n in new_nodes])
+
+          # Añadir hijos a abiertos
+          if len(new_nodes) > 0:
+              for new_node in new_nodes:
+                  new_node.heuristic_value = self.calculate_heuristic_value(selected_node, new_node, self.target)
+                  if new_node not in self.closed and new_node not in self.opened:
+                      new_node.parent = selected_node
+                      self.insert_to_list("open", new_node)
+
+
+
           

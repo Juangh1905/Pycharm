@@ -109,7 +109,6 @@ grafo = crear_grafo()
 ruta('A', 'G', grafo)
 
 
-
 # Ejercicio 6
 def ejecutar_busquedas(grafo):
     casos = [
@@ -132,5 +131,24 @@ grafo = crear_grafo()
 ejecutar_busquedas(grafo)
 
 """
+
+#Ejercicio 7
+def reset_graph(grafo):
+    for nodo in grafo.nodes:
+        nodo.parent = None
+        nodo.heuristic_value = -1
+        nodo.distance_from_start = inf
+
+reset_graph(grafo)
+algoritmo = AStar(grafo, 'A', 'E')
+resultado = algoritmo.search()
+
+if resultado:
+    path, cost = resultado
+    print("Ruta encontrada por A*:", " → ".join(path))
+    print("Coste total:", cost)
+else:
+    print("No se encontró ruta entre A y E")
+
 
 
