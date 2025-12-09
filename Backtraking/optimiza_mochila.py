@@ -76,7 +76,7 @@ def optimiza_mochila(mochila, mochila_optima, items, peso_max, paso=0):
 
             if compara_mochila(mochila, mochila_optima):
                 copia_mochila(mochila_optima, mochila)
-                print(f"{tab}✅ Mejor solución hasta ahora: {mochila_optima} (valor: {suma_valor(mochila_optima)}, peso: {suma_peso(mochila_optima)})")
+                print(f"{tab} Mejor solución hasta ahora: {mochila_optima} (valor: {suma_valor(mochila_optima)}, peso: {suma_peso(mochila_optima)})")
 
             optimiza_mochila(mochila, mochila_optima, nuevos_items, peso_max, paso + 1)
 

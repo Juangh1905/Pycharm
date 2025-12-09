@@ -91,8 +91,6 @@ def reset_graph(grafo):
         nodo.distance_from_start = inf
 
 
-
-
 # Ejercicio 5
 def ruta(origen, destino, grafo):
     algoritmo = AStar(grafo, origen, destino)   # crear objeto
@@ -131,6 +129,7 @@ grafo = crear_grafo()
 ejecutar_busquedas(grafo)
 
 """
+
 
 #Ejercicio 7
 def reset_graph(grafo):
